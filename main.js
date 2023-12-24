@@ -63,7 +63,7 @@ function addFruit() {
   const index = Math.floor(Math.random() * 5);
   const fruit = FRUITS[index];
 
-  const body = Bodies.circle(300, 50, fruit.radius, {
+  const body = Bodies.circle(initialWidth/2, 50, fruit.radius, {
     index: index,
     isSleeping: true,
     render: {
