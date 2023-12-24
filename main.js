@@ -2,6 +2,11 @@ import { Bodies, Body, Collision, Engine, Events, Render, Runner, World } from "
 import { FRUITS } from "./fruits";
 
 const engine = Engine.create();
+
+  // 초기 창 크기를 기반으로 렌더러 크기 설정
+  const initialWidth = window.innerWidth;
+  const initialHeight = window.innerHeight;
+
 const render = Render.create(
   {
     engine,
@@ -9,35 +14,39 @@ const render = Render.create(
     options: {
       wireframes: false,
       background: "#F7F4C8",
-      width: 620,
-      height: 850,
+      width: initialWidth,
+      height: initialHeight,
     }
   }
 );
 
 const world = engine.world;
 
-const leftWall = Bodies.rectangle(15, 395, 30, 790, {
-  isStatic: true,
-  render: { fillStyle: "#E6B143" }
-});
+  // 초기 벽의 크기를 기반으로 설정
+  const wallWidth = initialWidth * 0.05; // 전체 너비의 5%
+  const wallHeight = initialHeight; // 전체 높이의 80%
 
-const rightWall = Bodies.rectangle(605, 395, 30, 790, {
-  isStatic: true,
-  render: { fillStyle: "#E6B143" }
-});
+  const leftWall = Bodies.rectangle(wallWidth / 2, initialHeight / 2, wallWidth, wallHeight, {
+    isStatic: true,
+    render: { fillStyle: "#E6B143" }
+  });
 
-const ground = Bodies.rectangle(310, 820, 620, 60, {
-  isStatic: true,
-  render: { fillStyle: "#E6B143" }
-});
+  const rightWall = Bodies.rectangle(initialWidth - wallWidth / 2, initialHeight / 2, wallWidth, wallHeight, {
+    isStatic: true,
+    render: { fillStyle: "#E6B143" }
+  });
 
-const topLine = Bodies.rectangle(310, 150, 620, 2, {
-  name: "topLine",
-  isStatic: true,
-  isSensor: true,
-  render: { fillStyle: "#E6B143" }
-})
+  const ground = Bodies.rectangle(initialWidth / 2, initialHeight, initialWidth, 60, {
+    isStatic: true,
+    render: { fillStyle: "#E6B143" }
+  });
+
+  const topLine = Bodies.rectangle(initialWidth / 2, initialHeight * 0.2, initialWidth, 2, {
+    name: "topLine",
+    isStatic: true,
+    isSensor: true,
+    render: { fillStyle: "#E6B143" }
+  });
 
 World.add(world, [leftWall, rightWall, ground, topLine]);
 
